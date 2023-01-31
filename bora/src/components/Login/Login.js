@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { loginActions } from "../store/login";
-import kakaoLogin from "../assets/kakaoLogin.png";
+import { loginActions } from "../../store/login";
+// import kakaoLogin from "../assets/kakaoLogin.png";
 import axios from "axios";
 
 const Login = () => {
@@ -21,7 +21,8 @@ const Login = () => {
   return (
     <div>
       <button onClick={toggleLoginHandler}>CLICK</button>
-      {show && <img src={kakaoLogin} alt="kakaoLogin" onClick={goKakao} />}
+      {show && <button onClick={goKakao}>로그인</button>}
+      {/* <img src={kakaoLogin} alt="kakaoLogin" onClick={goKakao} /> */}
     </div>
   );
 };

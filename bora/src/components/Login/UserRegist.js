@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { loginActions } from "../store/login";
+import { loginActions } from "../../store/login";
 import axios from "axios";
 
 const UserRegist = () => {
+  //
   const dispatch = useDispatch();
 
   const id = useSelector((state) => state.login.id);
@@ -16,7 +17,7 @@ const UserRegist = () => {
       if (node.checked) {
         dispatch(loginActions.setGender(node.value));
       } else {
-        //유효성검사
+        //유효성검사(귀찮아서 안함)
       }
     });
   };
@@ -25,9 +26,9 @@ const UserRegist = () => {
 
     genderNodeList.forEach((node) => {
       if (node.checked) {
-        dispatch(loginActions.setAge(node.value));
+        dispatch(loginActions.setAge(parseInt(node.value)));
       } else {
-        //유효성검사
+        //유효성검사(귀찮아서 안함)
       }
     });
   };
@@ -58,19 +59,19 @@ const UserRegist = () => {
     <div>
       <div>회원가입</div>
       <label>
-        <input type="radio" value="m" name="gender" />
+        <input type="radio" value="m" name="gender" onClick={genderHandler} />
         남성
-        <input type="radio" value="f" name="gender" />
+        <input type="radio" value="f" name="gender" onClick={genderHandler} />
         여성
       </label>
       <label>
-        <input type="radio" value="1" name="age" />
+        <input type="radio" value="1" name="age" onClick={ageHandler} />
         10대 이하
-        <input type="radio" value="2" name="age" />
+        <input type="radio" value="2" name="age" onClick={ageHandler} />
         20대
-        <input type="radio" value="3" name="age" />
+        <input type="radio" value="3" name="age" onClick={ageHandler} />
         30대
-        <input type="radio" value="4" name="age" />
+        <input type="radio" value="4" name="age" onClick={ageHandler} />
         40대 이상
       </label>
       <button onClick={sendUserInfo}>제출</button>

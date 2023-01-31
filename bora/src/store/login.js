@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialLoginState = { showLogin: false, id: "", age: 0, gender: "" };
 
+//로그인 관련된 state요소들을 최신화 하는 slice (initialLoginState에 있는 state들을 최신화하는 코드)
 const loginSlice = createSlice({
   name: "login",
   initialState: initialLoginState,
