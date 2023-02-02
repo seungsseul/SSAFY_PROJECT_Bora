@@ -1,7 +1,9 @@
 import { Route, Routes, Navigate } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 import Login from "./components/Login/Login";
 import UserRegist from "./components/Login/UserRegist";
+
 import EmptyBoard from "./components/MyPage/Board/EmptyBoard";
 import WriteBoard from "./components/MyPage/Board/WriteBoard";
 import ViewBoard from "./components/MyPage/Board/ViewBoard";
@@ -12,31 +14,54 @@ import DetailBoard from "./components/MyPage/Board/DetailBoard";
 
 import UserToDj from "./components/MyPage/Form/UserToDj";
 import DjToDj from "./components/MyPage/Form/DjToDj";
+import UserToUser from "./components/MyPage/Form/UserToUser";
 
-import Broadcast from "./components/MyPage/Broadcast/Broadcast";
+import Broadcast from "./components/MyPage/BroadCast/Broadcast";
+import EmptyBroadcast from "./components/MyPage/BroadCast/EmptyBroadcast";
+import MakeBroadcast from "./components/MyPage/BroadCast/MakeBroadcast";
+
+import OnAir from "./UI/OnAir/OnAir";
+
+import MainPageForm from "./components/MainPage/MainPageForm";
 
 const App = () => {
   return (
-    <Routes>
-      {/**redirect = Navigate */}
-      <Route path="/" element={<Navigate to="/userToDj" />} />
+    <AnimatePresence>
+      <Routes>
+        {/**redirect = Navigate */}
+        <Route path="/" element={<Navigate to="/makeBroadcast" />} />
+        <Route path="/main" element={<MainPageForm />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/regist" element={<UserRegist />} />
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/regist" element={<UserRegist />} />
+        {/**유저가 보는 DJ */}
+        <Route element={<UserToDj />}>
+          <Route element={<OnAir />}>
+            <Route path="/emptyBoard" element={<EmptyBoard />} />
+            <Route path="/viewBoard" element={<ViewBoard />} />
+            <Route path="/writeBoard" element={<WriteBoard />} />
+            <Route path="/modifyBoard" element={<ModifyBoard />} />
+            <Route path="/broadcast" element={<Broadcast />} />
+          </Route>
+        </Route>
 
-      <Route path="/userToDj" element={<UserToDj />} />
-      <Route path="/djToDj" element={<DjToDj />} />
+        {/**DJ가 보는 DJ */}
+        <Route element={<DjToDj />}>
+          <Route element={<OnAir />}>
+            <Route path="/viewBoardList" element={<ViewBoardList />} />
+            <Route path="/detailBoard" element={<DetailBoard />} />
+          </Route>
+        </Route>
 
-      <Route path="/emptyBoard" element={<EmptyBoard />} />
-      <Route path="/writeBoard" element={<WriteBoard />} />
-      <Route path="/viewBoard" element={<ViewBoard />} />
-      <Route path="/modifyBoard" element={<ModifyBoard />} />
-
-      <Route path="/viewBoardList" element={<ViewBoardList />} />
-      <Route path="/detailBoard" element={<DetailBoard />} />
-
-      <Route path="/broadcast" element={<Broadcast />} />
-    </Routes>
+        {/**유저가 보는 유저 */}
+        <Route element={<UserToUser />}>
+          <Route element={<OnAir />}>
+            <Route path="/emptyBroadcast" element={<EmptyBroadcast />} />
+            <Route path="/makeBroadcast" element={<MakeBroadcast />} />
+          </Route>
+        </Route>
+      </Routes>
+    </AnimatePresence>
   );
 };
 

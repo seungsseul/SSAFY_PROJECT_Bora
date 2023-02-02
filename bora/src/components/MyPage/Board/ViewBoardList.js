@@ -25,8 +25,8 @@ const ViewBoardList = () => {
   // };
 
   return (
-    <div class="container">
-      <div class="board10">
+    <div>
+      <div className="board10">
         {/**생성한boards배열.map((배열안요소(객체), index) => (
           <span key={index}>
             {객체.title식으로 접근}
@@ -34,7 +34,7 @@ const ViewBoardList = () => {
           </span>
         )) */}
         <div>index</div>
-        <Link to="detailBoard">
+        <Link to="/detailBoard">
           <div>board.boardTitle</div>
         </Link>
         <div>writeState</div>

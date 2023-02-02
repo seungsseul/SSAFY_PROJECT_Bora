@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { boardActions } from "../../../store/board";
+import { letterActions } from "../../../store/letter";
+
+import "./WriteBoard.scss";
+import Button from "../../../UI/Button/Button";
 const WriteBoard = () => {
   const dispatch = useDispatch();
 
@@ -21,14 +26,19 @@ const WriteBoard = () => {
       boardTitle: document.getElementById("title").value,
       boardContent: document.getElementById("content").value,
     };
-    console.log(message);
+    // window.localStorage.setItem("board", message);
+    dispatch(letterActions.writeLetter());
     dispatch(boardActions.writeBoard(message));
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <fieldset>
-        <legend>사연을 보내주세요♥</legend>
+        <legend>사연을 보내주세요 💜</legend>
         <input type="text" id="title" />
         <br />
         <textarea
@@ -39,12 +49,22 @@ const WriteBoard = () => {
           rows="20"
         ></textarea>
         <br />
-        <span id="count">0/500</span>
-        <Link to="/viewBoard">
-          <button onClick={sendMessage}>보내기</button>
-        </Link>
+        <div id="countText">
+          <div id="count" style={{ flex: 1 }}>
+            0/500
+          </div>
+          <Link onClick={sendMessage} to="/viewBoard">
+            <Button
+              style={{ flex: 1 }}
+              name="보내기"
+              margin="10px"
+              fontsize="0.6em"
+              width="70px"
+            />
+          </Link>
+        </div>
       </fieldset>
-    </div>
+    </motion.div>
   );
 };
 export default WriteBoard;

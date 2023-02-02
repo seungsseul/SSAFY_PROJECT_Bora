@@ -4,6 +4,7 @@ import loginReducer from "./login";
 import broadcastReducer from "./broadcast";
 import boardReducer from "./board";
 import blacklistReducer from "./blacklist";
+import letterReducer from "./letter";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     broadcast: broadcastReducer,
     board: boardReducer,
     blacklist: blacklistReducer,
+    letter: letterReducer,
   },
 });
 

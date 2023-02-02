@@ -1,28 +1,45 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { boardActions } from "../../../store/board";
-import "./UserToDj.css";
-import profileImg from "../../../assets/profileimg.jpg";
-import Button from "../../../UI/Button";
+import "./UserToDj.scss";
+import profileImg from "../../../assets/mori.png";
+import radio from "../../../assets/radio.png";
+import Button from "../../../UI/Button/Button";
+import MailBox from "../../../UI/MailBox/MailBox";
 
 const UserToDj = () => {
   const dispatch = useDispatch();
 
   const toggle = useSelector((state) => state.board.toggle);
 
+  const isLetter = useSelector((state) => state.letter.isLetter);
+
   const toggleHandler = () => {
     dispatch(boardActions.toggleBoard());
   };
+
+  const subscribeHandler = () => {
+    console.log("하이");
+  };
+
   return (
     <div>
-      <fieldset>
-        <img src={profileImg} className="circle" />
+      <fieldset className="profile">
+        <img src={profileImg} alt="프로필이미지" className="circle" />
         <div className="trainerInfo">
           <div className="infoTop">
             <span className="nickname" style={{ marginRight: "20px", flex: 1 }}>
               DJ이름
             </span>
-            <Button style={{ flex: 1 }} value="subscribe" name="구독" />
+            <Button
+              style={{ flex: 1 }}
+              value={subscribeHandler}
+              name="구독"
+              margin="30px"
+              fontsize="0.8em"
+              width="70px"
+            />
           </div>
           <div>
             <span className="lister">청취자</span>
@@ -32,49 +49,47 @@ const UserToDj = () => {
             <p className="content">유저의 한마디입니다.</p>
           </div>
         </div>
-        {/* <div className="trainerInfo2">
-          <span>
-            <div></div>
-            <div>
-              <div id="buttonFirst" className="light-button button-wrapper">
-                <div className="button">
-                  <span id="button">구독취소</span>
-                </div>
-              </div>
-            </div>
-          </span>
-        </div>
-        <div className="trainerInfo2">
-          <div id="buttonFirst" className="light-button button-wrapper">
-            <div className="button">
-              <span id="button"> subscribeCnt1명 </span>
-            </div>
-          </div>
-        </div> */}
         <div>
-          {toggle && (
-            <Link to="/emptyBoard">
-              <button onClick={toggleHandler}>
-                사연함에 사연 신청하러 가기
-              </button>
-            </Link>
+          {toggle && !isLetter && (
+            <div>
+              <span className="goLetter">사연신청하러가기</span>
+              <span className="click">! ! Click ! !</span>
+              <Link onClick={toggleHandler} to="/emptyBoard">
+                <MailBox />
+              </Link>
+            </div>
           )}
-          {toggle && (
-            <Link to="/viewBoard">
-              <button onClick={toggleHandler}>
-                사연함에 사연 신청하러 가기
-              </button>
-            </Link>
+          {toggle && isLetter && (
+            <div>
+              <span className="goLetter">사연신청하러가기</span>
+              <span className="click">! ! Click ! !</span>
+              <Link onClick={toggleHandler} to="/viewBoard">
+                <MailBox />
+              </Link>
+            </div>
           )}
           {!toggle && (
-            <Link>
-              <button onClick={toggleHandler}>방송정보 보러가기</button>
-            </Link>
+            <div>
+              <span className="goLetter">방송정보 보러가기</span>
+              <span className="click">! ! Click ! !</span>
+              <Link onClick={toggleHandler} to="/broadcast">
+                <div className="monitor">
+                  <motion.img
+                    src={radio}
+                    alt="방송정보 보러가기"
+                    whileHover={{ scale: 1.2 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 10 }}
+                  />
+                </div>
+              </Link>
+            </div>
           )}
         </div>
       </fieldset>
       <hr />
+      <Outlet />
     </div>
   );
 };
+
 export default UserToDj;
