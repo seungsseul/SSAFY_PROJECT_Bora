@@ -10,6 +10,22 @@ import thumbnailImg from "../../../assets/4.jpg";
 
 const MakeBroadcast = () => {
   const createBroadcast = () => {
+    // {
+    //   userId:
+    //   name:
+    //   startTime:
+    //   endTime:
+    //   description:
+    //   notice:
+    //   category:
+    //   mon:
+    //   tue:
+    //   wen:
+    //   thu:
+    //   fri:
+    //   sat:
+    //   sun:
+    // }
     console.log("방송국 생성!");
   };
   return (
@@ -18,9 +34,11 @@ const MakeBroadcast = () => {
       <div className="space"></div>
       <div className="banner">
         <img src={left} alt="왼쪽확성기" className="bannerIcon" />
-        <span style={{ fontWeight: "bold", fontSize: "20px" }}>
-          1월 19일의 Puple Mood는 쉬어갑니다. 다음주 화요일에 만나요 !
-        </span>
+        <input
+          type="text"
+          placeholder="공지를 입력해주세요"
+          className="notice"
+        />
         <img src={right} alt="오른쪽확성기" className="bannerIcon" />
       </div>
       <div className="thumbnail">
@@ -38,26 +56,24 @@ const MakeBroadcast = () => {
         <div style={{ float: "left" }}>
           방송 요일
           <br />
-          <label className="label">
-            <input
-              type="checkbox"
-              value="mon"
-              name="day"
-              style={{ marginLeft: "0px" }}
-            />
-            월
-            <input type="checkbox" value="tue" name="day" />
-            화
-            <input type="checkbox" value="wed" name="day" />
-            수
-            <input type="checkbox" value="thu" name="day" />
-            목
-            <input type="checkbox" value="fri" name="day" />
-            금
-            <input type="checkbox" value="sat" name="day" />
-            토
-            <input type="checkbox" value="sun" name="day" />일
-          </label>
+          <input
+            type="checkbox"
+            value="mon"
+            name="day"
+            style={{ marginLeft: "0px" }}
+          />
+          월
+          <input type="checkbox" value="tue" name="day" />
+          화
+          <input type="checkbox" value="wed" name="day" />
+          수
+          <input type="checkbox" value="thu" name="day" />
+          목
+          <input type="checkbox" value="fri" name="day" />
+          금
+          <input type="checkbox" value="sat" name="day" />
+          토
+          <input type="checkbox" value="sun" name="day" />일
           <br />
           방송시간
           <br />
@@ -134,7 +150,11 @@ const MakeBroadcast = () => {
           <br />
           <input type="text" className="desc" />
           <br />
-          <Button name="생성하기" value={createBroadcast}></Button>
+          <Button
+            name="생성하기"
+            value={createBroadcast}
+            style={{ float: "left" }}
+          ></Button>
         </div>
       </div>
     </div>

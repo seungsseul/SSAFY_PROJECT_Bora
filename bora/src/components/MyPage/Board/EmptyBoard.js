@@ -25,7 +25,7 @@ const EmptyBoard = () => {
           <h1>작성한 사연이 없어요😢</h1>
         </div>
         <Link to="/writeBoard">
-          <GoButton />
+          <GoButton value="사연 작성하러 가기" />
         </Link>
       </div>
     </motion.div>
