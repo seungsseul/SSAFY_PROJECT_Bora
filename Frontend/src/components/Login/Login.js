@@ -2,8 +2,8 @@
 // import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loginActions } from "../../store/login";
-// import kakaoLogin from "../assets/kakaoLogin.png";
 
+// import kakaoLogin from "../assets/kakaoLogin.png";
 const Login = () => {
   const dispatch = useDispatch();
 
@@ -25,9 +25,7 @@ const Login = () => {
     <div>
       <button onClick={toggleLoginHandler}>CLICK</button>
       {show && <a href={URL}>로그인</a>}
-      {/* <img src={kakaoLogin} alt="kakaoLogin" onClick={goKakao} /> */}
     </div>
   );
 };
-
 export default Login;

@@ -39,6 +39,7 @@ fieldset {
 .content {
   color: #d1d1d1;
   font-size: 14px;
+  margin-left: 16px;
 }
 .playlist {
   width: 150px;
@@ -92,13 +93,13 @@ fieldset {
 .goLetter {
   position: absolute;
   font-size: 20px;
-  top: 20%;
+  top: 35%;
   right: 15.2%;
 }
 
 .click {
   position: absolute;
-  top: 33%;
+  top: 45%;
   right: 18.3%;
   color: #d8a3ff;
   font-size: 15px;
@@ -108,10 +109,14 @@ fieldset {
 .monitor img {
   width: 80px;
   position: absolute;
-  top: 43%;
+  top: 55%;
   right: 18.1%;
 }
 
 .subscribe {
   margin-top: 30px;
+}
+
+hr {
+  width: 80%;
 }

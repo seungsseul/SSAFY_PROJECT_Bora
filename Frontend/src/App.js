@@ -19,14 +19,19 @@ import UserToUser from "./components/MyPage/Form/UserToUser";
 import Broadcast from "./components/MyPage/Broadcast/Broadcast";
 import EmptyBroadcast from "./components/MyPage/Broadcast/EmptyBroadcast";
 import MakeBroadcast from "./components/MyPage/Broadcast/MakeBroadcast";
-
 import OnAir from "./UI/OnAir/OnAir";
 
 import MainPageForm from "./components/MainPage/MainPageForm";
+import Navbar from "./UI/NavBar/NavBar";
+
+import MySchedule from "./components/Schedule/MySchedule";
+import ModifySchedule from "./components/Schedule/ModifySchedule";
 
 const App = () => {
+  // const location = useLocation();
   return (
     <AnimatePresence>
+      <Navbar />
       <Routes>
         {/**redirect = Navigate */}
         <Route path="/" element={<Navigate to="/makeBroadcast" />} />
@@ -61,6 +66,10 @@ const App = () => {
             <Route path="/makeBroadcast" element={<MakeBroadcast />} />
           </Route>
         </Route>
+
+        {/**편성표 */}
+        <Route path="/mySchedule" element={<MySchedule />} />
+        <Route path="/modifySchedule" element={<ModifySchedule />} />
       </Routes>
     </AnimatePresence>
   );

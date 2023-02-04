@@ -23,8 +23,30 @@ const UserToDj = () => {
     console.log("하이");
   };
 
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        delay: 0.5,
+        duration: 0.5,
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: { ease: "easeInOut" },
+    },
+  };
+
   return (
-    <div>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      // exit="exit"
+    >
       <fieldset className="profile">
         <img src={profileImg} alt="프로필이미지" className="circle" />
         <div className="trainerInfo">
@@ -88,7 +110,7 @@ const UserToDj = () => {
       </fieldset>
       <hr />
       <Outlet />
-    </div>
+    </motion.div>
   );
 };
 

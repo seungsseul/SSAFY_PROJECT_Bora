@@ -17,7 +17,7 @@ const ViewBoard = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <fieldset>
+      <fieldset id="writeBoard">
         <legend>내가 보낸 사연 확인하기</legend>
         <input type="text" id="title" readOnly defaultValue={boardTitle} />
         <br />

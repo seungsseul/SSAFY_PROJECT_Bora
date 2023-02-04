@@ -1,7 +1,6 @@
 import "./MakeBroadcast.scss";
 
 import { Link } from "react-router-dom";
-
 import left from "../../../assets/left.png";
 import right from "../../../assets/right.png";
 import Button from "../../../UI/Button/Button";

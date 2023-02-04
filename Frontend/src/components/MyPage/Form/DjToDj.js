@@ -1,7 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { boardActions } from "../../../store/board";
-import "./DjToDj.scss";
+import "./UserToDj.scss";
+
+import { motion } from "framer-motion";
+
 import profileImg from "../../../assets/profileimg.jpg";
 import radio from "../../../assets/radio.png";
 import Button from "../../../UI/Button/Button";
@@ -24,8 +27,25 @@ const DjToDj = () => {
   const startBroadcast = () => {
     console.log("방송시작");
   };
+
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: {
+        delay: 0.3,
+        duration: 0.3,
+      },
+    },
+    exit: {
+      x: "-100vw",
+      transition: { ease: "easeInOut" },
+    },
+  };
   return (
-    <div>
+    <motion.div variants={containerVariants} initial="hidden" animate="visible">
       <fieldset className="profile">
         <img src={profileImg} alt="프로필이미지" className="circle" />
         <div className="trainerInfo">
@@ -86,7 +106,7 @@ const DjToDj = () => {
       </fieldset>
       <hr />
       <Outlet />
-    </div>
+    </motion.div>
   );
 };
 export default DjToDj;

@@ -34,7 +34,7 @@ const ModifyBoard = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <fieldset>
+      <fieldset id="writeBoard">
         <legend>사연을 보내주세요 💜</legend>
         <input type="text" id="title" defaultValue={boardTitle} />
         <br />

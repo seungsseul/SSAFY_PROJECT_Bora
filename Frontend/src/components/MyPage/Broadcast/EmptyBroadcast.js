@@ -14,7 +14,7 @@ const EmptyBoard = () => {
         <div className="typewriter">
           <h1>아직 DJ가 아니시군요😢</h1>
         </div>
-        <Link to="/makeBroadcast">
+        <Link to="/writeBoard">
           <GoButton value="방송국 개설하러 가기" />
         </Link>
       </div>
