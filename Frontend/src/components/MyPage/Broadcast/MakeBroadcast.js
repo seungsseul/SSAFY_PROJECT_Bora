@@ -1,5 +1,7 @@
 import "./MakeBroadcast.scss";
 
+import { Link } from "react-router-dom";
+
 import left from "../../../assets/left.png";
 import right from "../../../assets/right.png";
 import Button from "../../../UI/Button/Button";
@@ -150,11 +152,13 @@ const MakeBroadcast = () => {
           <br />
           <input type="text" className="desc" />
           <br />
-          <Button
-            name="생성하기"
-            value={createBroadcast}
-            style={{ float: "left" }}
-          ></Button>
+          <Link to="/broadcast">
+            <Button
+              name="생성하기"
+              value={createBroadcast}
+              style={{ float: "left" }}
+            ></Button>
+          </Link>
         </div>
       </div>
     </div>

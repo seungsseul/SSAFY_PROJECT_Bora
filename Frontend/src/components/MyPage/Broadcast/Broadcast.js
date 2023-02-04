@@ -1,14 +1,24 @@
 import "./Broadcast.scss";
 
+import { useSelector, useDispatch } from "react-redux";
+import { blacklistActions } from "../../../store/blacklist";
+
 import left from "../../../assets/left.png";
 import right from "../../../assets/right.png";
 import Button from "../../../UI/Button/Button";
-import { Link } from "react-router-dom";
 
 import bannerImg from "../../../assets/2.jpg";
 import thumbnailImg from "../../../assets/4.jpg";
+import BlackList from "../BlackList/BlackList";
 
 const Broadcast = () => {
+  const dispatch = useDispatch();
+  const showBlacklist = useSelector((state) => state.blacklist.showBlacklist);
+
+  const showblackList = () => {
+    dispatch(blacklistActions.openBlacklist());
+  };
+
   return (
     <div>
       <img className="bannerImg" src={bannerImg} alt="썸네일이미지" />
@@ -31,8 +41,9 @@ const Broadcast = () => {
           <br />
           방송설명자리
           <br />
-          <Link to="/blacklist">블랙리스트</Link>
+          <button onClick={showblackList}>블랙리스트</button>
           <Button name="방송정보 수정" style={{ float: "left" }}></Button>
+          {showBlacklist && <BlackList name="블랙리스트" />}
         </div>
       </div>
     </div>
