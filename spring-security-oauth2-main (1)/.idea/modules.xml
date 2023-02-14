@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/OAuthLoginExample.main.iml" filepath="$PROJECT_DIR$/.idea/modules/OAuthLoginExample.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.example.OAuthLoginExample.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.example.OAuthLoginExample.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/spring-security-oauth2-main (1).iml" filepath="$PROJECT_DIR$/.idea/spring-security-oauth2-main (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/spring-security-oauth2-main.OAuthLoginExample.main.iml" filepath="$PROJECT_DIR$/.idea/modules/spring-security-oauth2-main.OAuthLoginExample.main.iml" />
     </modules>
   </component>
 </project>

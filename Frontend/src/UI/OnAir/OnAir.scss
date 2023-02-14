@@ -9,9 +9,8 @@
   margin-top: 1.5rem;
 }
 
-.container {
+.onAir_container {
   width: 80%;
-  min-height: 440px;
   min-height: 400px;
   position: absolute;
   margin-top: 2rem;
@@ -21,12 +20,10 @@
   border: 8px solid #e2b8ff;
   border-style: double;
   border-radius: 20px;
-  z-index: 4;
 }
 
 .neon {
   position: absolute;
-  z-index: 3;
   width: 150px;
   height: 60px;
   top: -40px;
@@ -45,9 +42,9 @@
 }
 
 .neon {
-  animation: neon 1s ease infinite;
-  -moz-animation: neon 1s ease infinite;
-  -webkit-animation: neon 1s ease infinite;
+  animation: neon 0.8s ease infinite;
+  -moz-animation: neon 0.8s ease infinite;
+  -webkit-animation: neon 0.8s ease infinite;
 }
 
 @keyframes neon {

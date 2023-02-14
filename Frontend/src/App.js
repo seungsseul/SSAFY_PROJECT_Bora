@@ -27,6 +27,12 @@ import Navbar from "./UI/NavBar/NavBar";
 import MySchedule from "./components/Schedule/MySchedule";
 import ModifySchedule from "./components/Schedule/ModifySchedule";
 
+import ModifyBroadcast from "./components/MyPage/Broadcast/ModifyBroadcast";
+import ModifyProfile from "./components/MyPage/ModifyProfile/ModifyProfile";
+
+import VideoRoomComponent from "./components/Openvidu/components/VideoRoomComponent";
+
+// import VideoRoomComponent from "./components/Openvidu/components/VideoRoomComponent";
 const App = () => {
   // const location = useLocation();
   return (
@@ -55,6 +61,10 @@ const App = () => {
           <Route element={<OnAir />}>
             <Route path="/viewBoardList" element={<ViewBoardList />} />
             <Route path="/detailBoard" element={<DetailBoard />} />
+
+            <Route path="/broadcast" element={<Broadcast />} />
+            <Route path="/modifyBroadcast" element={<ModifyBroadcast />} />
+
             <Route path="/broadcast" element={<Broadcast />} />
           </Route>
         </Route>
@@ -67,9 +77,14 @@ const App = () => {
           </Route>
         </Route>
 
+        {/* <Route path="/modifyProfile" element={<ModifyProfile />} /> */}
+
         {/**편성표 */}
         <Route path="/mySchedule" element={<MySchedule />} />
         <Route path="/modifySchedule" element={<ModifySchedule />} />
+
+        {/* 오픈비두 */}
+        <Route path="/createRoom" element={<VideoRoomComponent />} />
       </Routes>
     </AnimatePresence>
   );

@@ -7,9 +7,10 @@ const UserRegist = () => {
   useEffect(() => {
     const urlSearch = new URLSearchParams(window.location.search);
     const accessToken = urlSearch.get("atk");
-    window.localStorage.clear();
     window.localStorage.setItem("atk", accessToken);
   }, []);
+  // axios.get(`/users/dummyuser`).then((res) => console.log(res));
+
   const dispatch = useDispatch();
 
   const id = useSelector((state) => state.login.id);
@@ -40,21 +41,49 @@ const UserRegist = () => {
   };
 
   const sendUserInfo = () => {
-    const userInfo = {
-      id: id,
-      age: age,
-      gender: gender,
-    };
-    console.log(userInfo);
+    // const userInfo = {
+    //   id: id,
+    //   age: age,
+    //   gender: gender,
+    // };
+    // console.log(userInfo);
 
-    const API_URL = `http://localhost:9999/userApi/백엔드 컨트롤러 경로`;
+    const API_URL = `http://localhost:8080/api/sign-up`;
     axios({
       url: API_URL,
       method: "POST",
-      params: userInfo,
+      data: {
+        userId: document.getElementById("inputEmail").value,
+        nickName: document.getElementById("inputNickname").value,
+        gender: gender,
+        age: age,
+      },
     })
-      .then(() => {
-        window.location.href = "메인페이지";
+      .then((res) => {
+        console.log(res);
+        window.localStorage.setItem("userId", res.data.id);
+        window.location.href = "http://localhost:3000/main";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const checkNickname = () => {
+    const nickname = document.getElementById("inputNickname").value;
+    const API_URL = `http://localhost:8080/api/sign-up/${nickname}`;
+    axios({
+      url: API_URL,
+      method: "GET",
+    })
+      .then((res) => {
+        if (res.data) {
+          document.getElementById("resTitle").innerHTML =
+            "사용 가능한 닉네임입니다.";
+        } else {
+          document.getElementById("resTitle").innerHTML =
+            "이미 사용중인 닉네임입니다.";
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -63,6 +92,18 @@ const UserRegist = () => {
 
   return (
     <div>
+      <div style={{ marginBottom: "100px" }}>회원가입</div>
+      <label>
+        이메일
+        <input type="text" id="inputEmail" />
+      </label>
+      <br />
+      <label>
+        닉네임 <input type="text" id="inputNickname" />
+        <button onClick={checkNickname}>중복체크</button>
+        <p id="resTitle"></p>
+      </label>
+      <br />
       <div>회원가입</div>
       <label>
         <input type="radio" value="m" name="gender" onClick={genderHandler} />
@@ -70,6 +111,9 @@ const UserRegist = () => {
         <input type="radio" value="f" name="gender" onClick={genderHandler} />
         여성
       </label>
+
+      <br />
+
       <label>
         <input type="radio" value="1" name="age" onClick={ageHandler} />
         10대 이하
