@@ -1,10 +1,12 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { boardActions } from "../../../store/board";
 import "./UserToDj.scss";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 import profileImg from "../../../assets/profileimg.jpg";
 import radio from "../../../assets/radio.png";
 import Button from "../../../UI/Button/Button";
@@ -15,34 +17,56 @@ import ModifyProfile from "../ModifyProfile/ModifyProfile";
 import { profileActions } from "../../../store/profile";
 
 const DjToDj = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const [nickname, setNickname] = useState();
+  const [desc, setDesc] = useState();
 
   const userId = window.localStorage.getItem("userId");
+
+  //DJ정보렌더링(본인)
   useEffect(() => {
-    const API_URL = `http://localhost:8080/api/users/${userId}`;
+    console.log(userId);
+    const API_URL = `http://localhost:8080/users/${userId}`;
     axios({
       url: API_URL,
       method: "GET",
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setNickname(res.data.nickName);
+        setDesc(res.data.desc);
         dispatch(profileActions.setProfile(res.data));
       })
       .catch((err) => {
         console.log(err);
       });
+
+    // const URL = `http://localhost:8080/follow/viewer/${djId}`;
+    // axios({
+    //   url: URL,
+    //   method: "GET",
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   }, [userId]);
 
   const showModifyProfile = useSelector(
     (state) => state.profile.showProfileModal
   );
-
   const toggle = useSelector((state) => state.board.toggle);
 
   const isLetter = useSelector((state) => state.letter.isLetter);
+
+  const moveToCreate = () => {
+    navigate("/createRoom");
+  };
 
   const toggleHandler = () => {
     dispatch(boardActions.toggleBoard());
@@ -52,20 +76,19 @@ const DjToDj = () => {
     dispatch(profileActions.openModifyProfile());
   };
 
-  const startBroadcast = () => {
-    const API_URL = `http://localhost:8080/api/stations/${userId}`;
-    axios({
-      url: API_URL,
-      method: "GET",
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  // const startBroadcast = () => {
+  //   const API_URL = `http://localhost:8080/api/stations/${userId}`;
+  //   axios({
+  //     url: API_URL,
+  //     method: "GET",
+  //   })
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   const containerVariants = {
     hidden: {
       opacity: 0,
@@ -84,7 +107,7 @@ const DjToDj = () => {
   };
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="visible">
-      <fieldset className="profile">
+      <fieldset className="profile" style={{ marginTop: "10px" }}>
         <img src={profileImg} alt="프로필이미지" className="circle" />
         <div className="trainerInfo">
           <div className="infoTop">
@@ -95,11 +118,24 @@ const DjToDj = () => {
               style={{ flex: 1 }}
               value={profileOpenHandeler}
               name="프로필 수정"
+              id="mypage_btn"
+              margin="30px"
+              DJ이름
             />
-            <Button
+            {/* <Button
               style={{ flex: 1 }}
               value={startBroadcast}
               name="방송하기"
+              id="mypage_btn"
+              margin="30px"
+              marginLeft="10px"
+            /> */}
+            <Button
+              style={{ flex: 1 }}
+              value={moveToCreate}
+              margin="30px"
+              marginLeft="10px"
+              name="방송시작하기"
             />
           </div>
           <div>
@@ -107,10 +143,12 @@ const DjToDj = () => {
             <span className="listercnt">100k</span>
           </div>
           <div>
-            <p className="content">유저의 한마디입니다.</p>
+            <p className="content">{desc}</p>
           </div>
         </div>
+
         {showModifyProfile && <ModifyProfile />}
+
         <div>
           {toggle && !isLetter && (
             <div>

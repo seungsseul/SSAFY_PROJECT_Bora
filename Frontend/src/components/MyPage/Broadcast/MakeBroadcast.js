@@ -13,36 +13,27 @@ import bannerImg from "../../../assets/2.jpg";
 import thumbnailImg from "../../../assets/4.jpg";
 
 const MakeBroadcast = () => {
+  const formData = new FormData();
   const createBroadcast = () => {
     const userId = window.localStorage.getItem("userId");
     const arr = [];
     const query = 'input[name="day"]:checked';
     const selectedEls = document.querySelectorAll(query);
-    var monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
     const dateController = new Date();
     let year = dateController.getFullYear(); // 년도
     let month = dateController.getMonth() + 1; // 월
+    if (parseInt(month) < 10) {
+      month = "0" + month;
+    }
     let date = dateController.getDate(); // 날짜
+
     //2007-12-03 10:15
-    const startTime = new Date(
-      `${year}-${month}-${date} ${document.getElementById("startTime").value}`
-    );
-    const endTime = new Date(
-      `${year}-${month}-${date} ${document.getElementById("endTime").value}`
-    );
+    const startTime = `${year}-${month}-${date} ${
+      document.getElementById("startTime").value
+    }`;
+    const endTime = `${year}-${month}-${date} ${
+      document.getElementById("endTime").value
+    }`;
     selectedEls.forEach((el) => {
       arr.push(el.value);
       // result += el.value + " ";
@@ -73,9 +64,7 @@ const MakeBroadcast = () => {
       sun: dayArr[6],
     };
 
-    console.log(stationInfo);
-
-    const API_URL = `http://localhost:8080/api/stations`;
+    const API_URL = `http://localhost:8080/stations`;
     axios({
       url: API_URL,
       method: "POST",
@@ -88,19 +77,7 @@ const MakeBroadcast = () => {
         console.log(err);
       });
 
-    //서버에 이미지 업로드 (배너이미지)
-    // if (image.image_file) {
-    //   const formData = new FormData();
-    //   formData.append("file", image.image_file);
-    //   await axios.post("/api/image/upload", formData);
-    //   alert("서버에 등록이 완료되었습니다!");
-    //   setImage({
-    //     image_file: "",
-    //     preview_URL: bannerImg,
-    //   });
-    // } else {
-    //   alert("사진을 등록하세요!");
-    // }
+    formData.delete("files");
   };
 
   const [image, setImage] = useState({
@@ -127,6 +104,7 @@ const MakeBroadcast = () => {
         image_file: e.target.files[0],
         preview_URL: preview_URL,
       }));
+      formData.append("files", e.target.files[0]);
     }
   };
 
@@ -163,6 +141,7 @@ const MakeBroadcast = () => {
     <div>
       <div className="uploader-wrapper">
         <input
+          id="makeBroadcastInput"
           type="file"
           accept="image/*"
           onChange={saveImage}
@@ -220,23 +199,23 @@ const MakeBroadcast = () => {
           방송 요일
           <br />
           <input
-            type="checkbox"
+            type="radio"
             value="mon"
             name="day"
             style={{ marginLeft: "0px" }}
           />
           월
-          <input type="checkbox" value="tue" name="day" />
+          <input type="radio" value="tue" name="day" />
           화
-          <input type="checkbox" value="wed" name="day" />
+          <input type="radio" value="wed" name="day" />
           수
-          <input type="checkbox" value="thu" name="day" />
+          <input type="radio" value="thu" name="day" />
           목
-          <input type="checkbox" value="fri" name="day" />
+          <input type="radio" value="fri" name="day" />
           금
-          <input type="checkbox" value="sat" name="day" />
+          <input type="radio" value="sat" name="day" />
           토
-          <input type="checkbox" value="sun" name="day" />일
+          <input type="radio" value="sun" name="day" />일
           <br />
           방송시간
           <br />
@@ -313,7 +292,7 @@ const MakeBroadcast = () => {
           <br />
           <input type="text" id="broadcastDesc" className="desc" />
           <br />
-          <Link to="/broadcast">
+          <Link to="/broadcasts">
             <Button2
               name="생성하기"
               value={createBroadcast}

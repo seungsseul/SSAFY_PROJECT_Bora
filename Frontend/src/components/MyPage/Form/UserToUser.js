@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import "./UserToDj.scss";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import profileImg from "../../../assets/mori.png";
@@ -16,13 +17,16 @@ const UserToUser = () => {
   const [nickname, setNickname] = useState();
   const [desc, setDesc] = useState();
   const userId = window.localStorage.getItem("userId");
+
+  //유저정보렌더링(본인)
   useEffect(() => {
-    const API_URL = `http://localhost:8080/api/users/${userId}`;
+    const API_URL = `http://localhost:8080/users/${userId}`;
     axios({
       url: API_URL,
       method: "GET",
     })
       .then((res) => {
+        // console.log(res);
         setNickname(res.data.nickName);
         setDesc(res.data.desc);
         dispatch(profileActions.setProfile(res.data));

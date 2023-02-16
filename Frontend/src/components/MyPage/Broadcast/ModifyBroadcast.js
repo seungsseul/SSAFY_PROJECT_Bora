@@ -29,20 +29,6 @@ const ModifyBroadcast = () => {
         dayArr.push(false);
       }
     }
-    var monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
     const dateController = new Date();
     let year = dateController.getFullYear(); // 년도
     let month = dateController.getMonth() + 1; // 월
@@ -58,7 +44,6 @@ const ModifyBroadcast = () => {
     if (parseInt(end[0]) < 10) {
       end = "0" + end;
     }
-    console.log(document.getElementById("modifyDesc").value);
     //2007-12-03 10:15
     const startTime = `${year}-${month}-${date} ${start}`;
     const endTime = `${year}-${month}-${date} ${end}`;
@@ -78,15 +63,14 @@ const ModifyBroadcast = () => {
       sat: dayArr[5],
       sun: dayArr[6],
     };
-    const API_URL = `http://localhost:8080/api/stations`;
-    console.log(stationInfo);
+    const API_URL = `http://localhost:8080/stations`;
     axios({
       url: API_URL,
       method: "PATCH",
       data: stationInfo,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         window.location.reload();
       })
       .catch((err) => {
@@ -96,7 +80,7 @@ const ModifyBroadcast = () => {
 
   const checkBroadcastTitle = () => {
     const modifytitle = document.getElementById("modifyBroadcastTitle").value;
-    const API_URL = `http://localhost:8080/api/stations/check/${modifytitle}`;
+    const API_URL = `http://localhost:8080/stations/check/${modifytitle}`;
     axios({
       url: API_URL,
       method: "GET",
@@ -142,7 +126,7 @@ const ModifyBroadcast = () => {
             id="modifyBroadcastTitle"
           />
           <p id="resTitle"></p>
-          <button onClick={checkBroadcastTitle}>중복확인</button>
+          <Button value={checkBroadcastTitle} name="중복확인"></Button>
         </div>
         <hr />
         <div style={{ float: "left" }}>
@@ -152,7 +136,7 @@ const ModifyBroadcast = () => {
           <br />
           <input type="text" className="desc" id="modifyDesc" />
           <br />
-          <Link to="/broadcast">
+          <Link to="/broadcasts">
             <Button
               name="방송정보 수정"
               style={{ float: "left" }}

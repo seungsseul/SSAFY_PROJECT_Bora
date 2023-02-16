@@ -11,6 +11,7 @@ const Input = () => {
         id="name"
         required
       />
+
       <label for="name" className="form__label">
         Name
       </label>

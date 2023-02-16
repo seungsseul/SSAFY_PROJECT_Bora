@@ -2,11 +2,14 @@ import { Link, Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { boardActions } from "../../../store/board";
-import "./UserToDj.scss";
+
+import "./DjToDj.scss";
+
 import profileImg from "../../../assets/mori.png";
 import radio from "../../../assets/radio.png";
 import Button from "../../../UI/Button/Button";
 import MailBox from "../../../UI/MailBox/MailBox";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { profileActions } from "../../../store/profile";
@@ -16,17 +19,20 @@ const UserToDj = () => {
   const dispatch = useDispatch();
 
   const [nickname, setNickname] = useState();
+  const [desc, setDesc] = useState();
 
   const userId = window.localStorage.getItem("userId");
   const djId = "3";
+  //DJ정보 렌더링
   useEffect(() => {
-    const API_URL = `http://localhost:8080/api/users/${djId}`;
+    const API_URL = `http://localhost:8080/users/${djId}`;
     axios({
       url: API_URL,
       method: "GET",
     })
       .then((res) => {
         setNickname(res.data.nickName);
+        setDesc(res.data.desc);
         dispatch(profileActions.setProfile(res.data));
       })
       .catch((err) => {
@@ -135,7 +141,7 @@ const UserToDj = () => {
             <span className="listercnt">{subscribeCnt}</span>
           </div>
           <div>
-            <p className="content">유저의 한마디입니다.</p>
+            <p className="content">{desc}</p>
           </div>
         </div>
         <div>

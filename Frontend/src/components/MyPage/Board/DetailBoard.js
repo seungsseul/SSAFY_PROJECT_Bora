@@ -9,10 +9,13 @@ const DetailBoard = () => {
   const location = useLocation();
   const storyboxId = location.state.storyboxId;
   const userId = window.localStorage.getItem("userId");
-  const djId = "hello";
+  const djId = "3";
   const [writer, setWriter] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
+
+  const boardTitle = useSelector((state) => state.board.boardTitle);
+  const boardContent = useSelector((state) => state.board.boardContent);
 
   useEffect(() => {
     //1.axios요청으로 사연리스트 객체 받아오기
@@ -32,13 +35,12 @@ const DetailBoard = () => {
       });
   }, []);
 
-  const boardTitle = useSelector((state) => state.board.boardTitle);
-  const boardContent = useSelector((state) => state.board.boardContent);
   const deleteBoard = () => {
     //모달창 띄우기
     //예 누르면 모달창 false하고 사연리스트로 이동
     //이때 axios요청해서 해당 사연이 가려진 새로운 사연리스트 받아서 페이지에 세팅
     //아니오 누르면 모달창 false하고 사연리스트 이동x
+
     const API_URL = `http://localhost:8080/api/storybox/list/${storyboxId}`;
     axios
       .delete(API_URL)
@@ -50,11 +52,32 @@ const DetailBoard = () => {
         console.log(err);
       });
   };
+
+  const addBlacklist = () => {
+    const DATA = {
+      djId: "3",
+      viewerId: writer,
+    };
+    const API_URL = `http://localhost:8080/api/users/blacklist`;
+    axios({
+      url: API_URL,
+      method: "POST",
+      data: DATA,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <fieldset>
-      <span>프로필사진</span>
-      <span>{writer}</span>
+      <span style={{ paddingTop: "30px" }}>프로필사진</span>
+
+      <div>{writer}</div>
       <input type="text" id="title" readOnly defaultValue={title} />
+
       <br />
       <textarea
         id="content"
@@ -67,9 +90,10 @@ const DetailBoard = () => {
       <Link to="/viewBoardList">
         <button>목록</button>
       </Link>
-      {/* <Link to="/modifyBoard"> */}
+
       <button onClick={deleteBoard}>사연가리기</button>
-      {/* </Link> */}
+
+      <button onClick={addBlacklist}>블랙리스트추가</button>
     </fieldset>
   );
 };
