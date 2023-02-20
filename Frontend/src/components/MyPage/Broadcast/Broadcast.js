@@ -9,8 +9,8 @@ import left from "../../../assets/left.png";
 import right from "../../../assets/right.png";
 import Button from "../../../UI/Button/Button";
 
-import bannerImg from "../../../assets/2.jpg";
-import thumbnailImg from "../../../assets/4.jpg";
+import bannerImg from "../../../assets/arr3.jpeg";
+import thumbnailImg from "../../../assets/arr4.jpg";
 import BlackList from "../BlackList/BlackList";
 
 import { Link } from "react-router-dom";
@@ -28,39 +28,26 @@ const Broadcast = () => {
   const [name, setName] = useState("");
   const [notice, setNotice] = useState("");
   const [day, setDay] = useState("");
+  const [bannerimg, setBannerimg] = useState("");
+  const [thumbnailimg, setThumbnail] = useState("");
   useEffect(() => {
     const resarr = ["월", "화", "수", "목", "금", "토", "일"];
-    const API_URL = `http://localhost:8080/stations/${userId}`;
+    const API_URL = `http://localhost:8080/api/stations/${userId}`;
     axios({
       url: API_URL,
       method: "GET",
     })
       .then((res) => {
-        // console.log(res);
+        console.log(res.data.thumbnail);
         setCategory(res.data.category);
         setDescription(res.data.description);
         setStarttime(res.data.startTime);
         setEndtime(res.data.endTime);
         setName(res.data.name);
         setNotice(res.data.notice);
-        const dayarr = [
-          res.data.mon,
-          res.data.tue,
-          res.data.wen,
-          res.data.thu,
-          res.data.fri,
-          res.data.sat,
-          res.data.sun,
-        ];
-        let realday = "";
-        for (let i = 0; i < dayarr.length; i++) {
-          if (dayarr[i] === true) {
-            setDay(resarr[i]);
-            realday = resarr[i];
-          }
-        }
-        dispatch(broadcastActions.setBroadcast(res.data));
-        dispatch(broadcastActions.setDay(realday));
+        setBannerimg(res.data.banner);
+        setThumbnail(res.data.thumbnail);
+        setDay(res.data.day);
       })
       .catch((err) => {
         console.log(err);
@@ -70,7 +57,7 @@ const Broadcast = () => {
 
   const showblackList = () => {
     dispatch(blacklistActions.openBlacklist());
-    const API_URL = `http://localhost:8080/api/users/blacklist/${userId}`;
+    const API_URL = `http://localhost:8080/users/blacklist/${userId}`;
     axios({
       url: API_URL,
       method: "GET",
@@ -107,7 +94,7 @@ const Broadcast = () => {
           <br />
           {description}
           <br />
-          <button onClick={showblackList}>블랙리스트</button>
+          {/* <button onClick={showblackList}>블랙리스트</button> */}
           <Link to="/modifyBroadcast">
             <Button name="방송정보 수정" style={{ float: "left" }}></Button>
           </Link>

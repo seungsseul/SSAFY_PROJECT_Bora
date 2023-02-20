@@ -11,7 +11,7 @@ import gift from "../../../assets/gift.png";
 
 const ViewBoardList = () => {
   const dispatch = useDispatch();
-  const userId = "3";
+  const userId = window.localStorage.getItem("userId");
   const [checkedItems, setCheckedItems] = useState([]);
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,7 +19,7 @@ const ViewBoardList = () => {
 
   useEffect(() => {
     //1.axios요청으로 사연리스트 객체 받아오기
-    const API_URL = `http://localhost:8080/api/storybox/list/${userId}`;
+    const API_URL = `http://localhost:8080/storybox/list/${userId}`;
     axios({
       url: API_URL,
       method: "GET",
@@ -82,7 +82,7 @@ const ViewBoardList = () => {
     //5.모달창 "예" -> axios 요청해서 새로운 사연리스트 받아서 리렌더링
     //6.모달창 "아니오" -> 모달창 false
 
-    const API_URL = `http://localhost:8080/api/storybox/list`;
+    const API_URL = `http://localhost:8080/storybox/list`;
     axios({
       url: API_URL,
       method: "DELETE",
@@ -165,7 +165,7 @@ const ViewBoardList = () => {
                     <Link
                       className="text-ellipsis"
                       to={`/detailBoard`}
-                      state={{ storyboxId: post.id }}
+                      state={{ storyboxId: post.id, viewerId: post.viewerId }}
                       style={{ textDecoration: "none" }}
                     >
                       {post.title}
@@ -174,7 +174,7 @@ const ViewBoardList = () => {
                   <td>{post.viewerId}</td>
                   <td>{post.is_read ? "읽음" : "읽지않음"}</td>
                   <td style={{ textAlign: "center" }}>
-                    {`${post.regDateTime[0]}-${post.regDateTime[1]}-${post.regDateTime[2]} ${post.regDateTime[3]}:${post.regDateTime[4]}:${post.regDateTime[5]}`}
+                    {`${post.regDateTime[0]}-0${post.regDateTime[1]}-${post.regDateTime[2]} 0${post.regDateTime[3]}:${post.regDateTime[4]}`}
                   </td>
                 </tr>
               ))}
@@ -187,7 +187,7 @@ const ViewBoardList = () => {
           )}
           {show && (
             <button onClick={deleteBoards} className="letterListBtn">
-              사연가리기2
+              사연가리기
             </button>
           )}
         </div>

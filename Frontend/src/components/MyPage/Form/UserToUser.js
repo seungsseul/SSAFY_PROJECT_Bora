@@ -16,6 +16,7 @@ const UserToUser = () => {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState();
   const [desc, setDesc] = useState();
+  const [profileimg, setProfileimg] = useState();
   const userId = window.localStorage.getItem("userId");
 
   //유저정보렌더링(본인)
@@ -26,9 +27,10 @@ const UserToUser = () => {
       method: "GET",
     })
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         setNickname(res.data.nickName);
         setDesc(res.data.desc);
+        setProfileimg(res.data.profileImg);
         dispatch(profileActions.setProfile(res.data));
       })
       .catch((err) => {
@@ -47,7 +49,7 @@ const UserToUser = () => {
   return (
     <div>
       <fieldset className="profile">
-        <img src={profileImg} alt="프로필이미지" className="circle" />
+        <img src={profileimg} alt="프로필이미지" className="circle" />
         <div className="trainerInfo">
           <div className="infoTop">
             <span className="nickname" style={{ marginRight: "20px", flex: 1 }}>
@@ -58,10 +60,6 @@ const UserToUser = () => {
               value={profileOpenHandeler}
               name="프로필 수정"
             />
-          </div>
-          <div>
-            <span className="lister">청취자</span>
-            <span className="listercnt">100k</span>
           </div>
           <div>
             <p className="content">{desc}</p>

@@ -118,8 +118,8 @@ const SearchBar = ({
           return (
             <li key={product.name}>
               <form>
-                <Button
-                  type="button"
+                <div
+                  className="SerchBarForm"
                   onClick={() =>
                     Submit(
                       product.stationName,
@@ -131,13 +131,14 @@ const SearchBar = ({
                     )
                   }
                 >
-                  방송국명 : <p id={`name${index}`}>{product.stationName}</p>
-                  <br />
-                  요일 : <p id={`day${index}`}>{product.day}</p>
-                  <br />
-                  시간 : <p id={`start${index}`}>{product.startTime}</p> ~
-                  <p id={`end${index}`}>{product.endTime}</p>
-                </Button>
+                  <p id={`name${index}`}>방송국명 : {product.stationName}</p>
+                  <p id={`day${index}`}> 요일 :{product.day}</p>
+                  <p id={`start${index}`}>
+                    {" "}
+                    시간 :{product.startTime} - {product.endTime}
+                  </p>
+                  {/* <p id={`end${index}`}>{product.endTime}</p> */}
+                </div>
               </form>
             </li>
           );

@@ -12,7 +12,7 @@ import { EffectFlip, Pagination, Navigation } from "swiper";
 
 import Schedular from "../../UI/Schedular/Schedular";
 
-import thumbnialImg from "../../assets/4.jpg";
+import thumbnialImg from "../../assets/title4.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -45,7 +45,7 @@ const MySchedule = () => {
   const [saturdaylist, setSaturdaylist] = useState([]);
 
   useEffect(() => {
-    const API_URL = `http://localhost:8080/api/users/playlist/${"1"}`;
+    const API_URL = `http://localhost:8080/users/playlist/${"1"}`;
     axios({
       url: API_URL,
       method: "GET",

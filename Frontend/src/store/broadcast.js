@@ -8,6 +8,7 @@ const initialBroadcastState = {
   name: "",
   notice: "",
   day: "",
+  isVaild: false,
 };
 
 const broadcastSlice = createSlice({
@@ -21,12 +22,12 @@ const broadcastSlice = createSlice({
       state.endtime = action.payload.endTime;
       state.name = action.payload.name;
       state.notice = action.payload.notice;
-      console.log(state.starttime);
-      console.log(state.endtime);
     },
     setDay(state, action) {
       state.day = action.payload;
-      console.log(state.day);
+    },
+    checkInfo(state, action) {
+      state.isVaild = action.payload;
     },
   },
 });

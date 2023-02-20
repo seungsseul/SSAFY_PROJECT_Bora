@@ -43,38 +43,6 @@ const UserRegist = () => {
     });
   };
 
-  const sendUserInfo = () => {
-    // const userInfo = {
-    //   id: id,
-    //   age: age,
-    //   gender: gender,
-    // };
-    // console.log(userInfo);
-
-    const API_URL = `http://localhost:8080/sign-up`;
-    const userId = window.localStorage.getItem("userId");
-    const DATA = {
-      userId: userId,
-      nickName: document.getElementById("inputNickname").value,
-      age: age,
-      gender: gender,
-    };
-    console.log(DATA);
-    axios({
-      url: API_URL,
-      method: "PATCH",
-      data: DATA,
-    })
-      .then((res) => {
-        console.log(res);
-        window.localStorage.setItem("userId", res.data.id);
-        // window.location.href = "http://localhost:3000/main";
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const checkNickname = () => {
     const nickname = document.getElementById("inputNickname").value;
     const API_URL = `http://localhost:8080/sign-up/${nickname}`;
@@ -86,9 +54,11 @@ const UserRegist = () => {
         if (res.data) {
           document.getElementById("resTitle").innerHTML =
             "사용 가능한 닉네임입니다.";
+          dispatch(loginActions.checkInfo(true));
         } else {
           document.getElementById("resTitle").innerHTML =
             "이미 사용중인 닉네임입니다.";
+          dispatch(loginActions.checkInfo(false));
         }
       })
       .catch((err) => {
@@ -100,7 +70,40 @@ const UserRegist = () => {
       document.getElementById("inputNickname").value
     );
   };
+  const check = useSelector((state) => state.broadcast.isVaild);
 
+  const sendUserInfo = () => {
+    const nickname = document.getElementById("inputNickname").value;
+    if ((age === 0) | (gender.length == 0) | (nickname.length == 0) | !check) {
+      document.getElementById("resModify").innerHTML =
+        "회원정보를 다시 입력해주세요.";
+      document.getElementById("resModify").style.color = "red";
+
+      const API_URL = `http://localhost:8080/sign-up`;
+      const userId = window.localStorage.getItem("userId");
+      const DATA = {
+        userId: userId,
+        nickName: nickname,
+        age: age,
+        gender: gender,
+      };
+      console.log(DATA);
+
+      axios({
+        url: API_URL,
+        method: "PATCH",
+        data: DATA,
+      })
+        .then((res) => {
+          console.log(res);
+          window.localStorage.setItem("userId", res.data.id);
+          window.location.href = "http://localhost:3000/main";
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <div className="registBody">
       <div className="registBody2"></div>
@@ -156,6 +159,7 @@ const UserRegist = () => {
         <button onClick={sendUserInfo} className="registBtn">
           제출
         </button>
+        <p id="resModify"></p>
       </div>
     </div>
   );

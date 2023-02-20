@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { boardActions } from "../../../store/board";
+import "./DetailBoard.scss";
 
 const DetailBoard = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const storyboxId = location.state.storyboxId;
-  const userId = window.localStorage.getItem("userId");
-  const djId = "3";
+  const viewerId = location.state.viewerId;
+  const djId = window.localStorage.getItem("userId");
   const [writer, setWriter] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
@@ -19,7 +20,7 @@ const DetailBoard = () => {
 
   useEffect(() => {
     //1.axios요청으로 사연리스트 객체 받아오기
-    const API_URL = `http://localhost:8080/api/storybox/list/${djId}/${storyboxId}`;
+    const API_URL = `http://localhost:8080/storybox/list/${djId}/${storyboxId}`;
     axios({
       url: API_URL,
       method: "GET",
@@ -46,6 +47,7 @@ const DetailBoard = () => {
       .delete(API_URL)
       .then((res) => {
         console.log(res);
+        window.location.href = "http://localhost:3000/viewBoardList";
         // dispatch(boardActions.writeBoard(res.data));
       })
       .catch((err) => {
@@ -58,7 +60,7 @@ const DetailBoard = () => {
       djId: "3",
       viewerId: writer,
     };
-    const API_URL = `http://localhost:8080/api/users/blacklist`;
+    const API_URL = `http://localhost:8080/users/blacklist`;
     axios({
       url: API_URL,
       method: "POST",
@@ -75,11 +77,18 @@ const DetailBoard = () => {
     <fieldset>
       <span style={{ paddingTop: "30px" }}>프로필사진</span>
 
-      <div>{writer}</div>
-      <input type="text" id="title" readOnly defaultValue={title} />
+      <div className="detailBoardTitle">작성자 {writer}</div>
+      <input
+        type="text"
+        id="title"
+        readOnly
+        defaultValue={title}
+        className="detailBoardContent"
+      />
 
       <br />
       <textarea
+        className="detailBoardContent"
         id="content"
         cols="70"
         rows="20"
@@ -88,12 +97,20 @@ const DetailBoard = () => {
       ></textarea>
       <br />
       <Link to="/viewBoardList">
-        <button>목록</button>
+        <button className="detailBoardBtn" style={{ marginLeft: "10px" }}>
+          목록
+        </button>
       </Link>
 
-      <button onClick={deleteBoard}>사연가리기</button>
+      <button
+        className="detailBoardBtn"
+        style={{ marginLeft: "10px" }}
+        onClick={deleteBoard}
+      >
+        사연가리기
+      </button>
 
-      <button onClick={addBlacklist}>블랙리스트추가</button>
+      {/* <button onClick={addBlacklist}>블랙리스트추가</button> */}
     </fieldset>
   );
 };

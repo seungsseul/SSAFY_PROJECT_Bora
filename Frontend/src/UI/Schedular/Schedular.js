@@ -1,4 +1,4 @@
-import thumbnailImg from "../../assets/4.jpg";
+import thumbnailImg from "../../assets/title4.jpg";
 import "./Schedular.scss";
 
 const Schedular = (props) => {

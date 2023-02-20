@@ -9,11 +9,10 @@ import right from "../../../assets/right.png";
 import Button2 from "../../../UI/Button/Button";
 
 //더미데이터
-import bannerImg from "../../../assets/2.jpg";
-import thumbnailImg from "../../../assets/4.jpg";
+import bannerImg from "../../../assets/arr3.jpeg";
+import thumbnailImg from "../../../assets/arr4.jpg";
 
 const MakeBroadcast = () => {
-  const formData = new FormData();
   const createBroadcast = () => {
     const userId = window.localStorage.getItem("userId");
     const arr = [];
@@ -38,15 +37,7 @@ const MakeBroadcast = () => {
       arr.push(el.value);
       // result += el.value + " ";
     });
-    const dayArr = [
-      arr.includes("mon"),
-      arr.includes("tue"),
-      arr.includes("wed"),
-      arr.includes("thu"),
-      arr.includes("fri"),
-      arr.includes("sat"),
-      arr.includes("sun"),
-    ];
+
     const stationInfo = {
       userId: userId,
       name: document.getElementById("broadcastTitle").value,
@@ -55,16 +46,10 @@ const MakeBroadcast = () => {
       description: document.getElementById("broadcastDesc").value,
       notice: document.getElementById("broadcastNotice").value,
       category: document.getElementById("broadcastCategory").value,
-      mon: dayArr[0],
-      tue: dayArr[1],
-      wen: dayArr[2],
-      thu: dayArr[3],
-      fri: dayArr[4],
-      sat: dayArr[5],
-      sun: dayArr[6],
+      day: selectedEls,
     };
 
-    const API_URL = `http://localhost:8080/stations`;
+    const API_URL = `http://localhost:8080/api/stations`;
     axios({
       url: API_URL,
       method: "POST",
@@ -76,8 +61,6 @@ const MakeBroadcast = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    formData.delete("files");
   };
 
   const [image, setImage] = useState({
@@ -104,7 +87,28 @@ const MakeBroadcast = () => {
         image_file: e.target.files[0],
         preview_URL: preview_URL,
       }));
-      formData.append("files", e.target.files[0]);
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      const userId = window.localStorage.getItem("userId");
+      const HEADERS = {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+      };
+      //이미지 axios요청
+      const IMG_URL = `http://localhost:8080/img/file-upload/banner/${userId}`;
+      axios({
+        headers: HEADERS,
+        url: IMG_URL,
+        method: "POST",
+        data: formData,
+      })
+        .then((res) => {
+          console.log(res);
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -118,24 +122,42 @@ const MakeBroadcast = () => {
         image_file: e.target.files[0],
         preview_URL: preview_URL,
       }));
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      const userId = window.localStorage.getItem("userId");
+      const HEADERS = {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+      };
+      //이미지 axios요청
+      const IMG_URL = `http://localhost:8080/img/file-upload/thumbnail/${userId}`;
+      axios({
+        headers: HEADERS,
+        url: IMG_URL,
+        method: "POST",
+        data: formData,
+      })
+        .then((res) => {
+          console.log(res);
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
-  const deleteImage = () => {
-    // createObjectURL()을 통해 생성한 기존 URL을 폐기
-    URL.revokeObjectURL(image.preview_URL);
-    setImage({
-      image_file: "",
-      preview_URL: bannerImg,
+  const genderHandler = () => {
+    const genderNodeList = document.getElementsByName("gender");
+
+    genderNodeList.forEach((node) => {
+      if (node.checked) {
+        // dispatch(broadcastActions.setDay(node.value));
+      } else {
+        //유효성검사(귀찮아서 안함)
+      }
     });
   };
-
-  useEffect(() => {
-    // 컴포넌트가 언마운트되면 createObjectURL()을 통해 생성한 기존 URL을 폐기
-    return () => {
-      URL.revokeObjectURL(image.preview_URL);
-    };
-  }, []);
 
   return (
     <div>
@@ -215,7 +237,8 @@ const MakeBroadcast = () => {
           금
           <input type="radio" value="sat" name="day" />
           토
-          <input type="radio" value="sun" name="day" />일
+          <input type="radio" value="sun" name="day" />
+          일
           <br />
           방송시간
           <br />

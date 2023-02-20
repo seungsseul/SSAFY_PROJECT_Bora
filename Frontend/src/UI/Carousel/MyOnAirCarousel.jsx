@@ -15,7 +15,7 @@ import { Navigation, Pagination } from "swiper";
 
 const MyOnAirCarousel = (props) => {
   const navigator = useNavigate();
-  console.log(props);
+  // console.log(props);
 
   return (
     // <>

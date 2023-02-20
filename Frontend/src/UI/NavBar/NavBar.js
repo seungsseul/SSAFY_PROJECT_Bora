@@ -39,6 +39,21 @@ export default function Navbar() {
       .catch((err) => {
         console.log(err);
       });
+
+    const API_URL2 = `http://localhost:8080/users/${userId}`;
+    axios({
+      url: API_URL2,
+      method: "GET",
+    })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.stationDTO !== null) {
+          setIsbroadcast(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [userId]);
 
   if (sidebar) {
@@ -76,6 +91,25 @@ export default function Navbar() {
       "authorize-access-token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
   };
 
+  const [isbroadcast, setIsbroadcast] = useState(false);
+
+  const isBroadcast = () => {
+    const API_URL = `http://localhost:8080/users/${userId}`;
+    console.log(userId);
+    axios({
+      url: API_URL,
+      method: "GET",
+    })
+      .then((res) => {
+        if (res.data.stationDTO !== null) {
+          setIsbroadcast(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <IconContext.Provider value={{ color: "#FFF" }}>
@@ -83,9 +117,9 @@ export default function Navbar() {
           <div className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </div>
-          <a href="/main">
+          <Link to="/main">
             <img id="mainLogo" src={Logo} alt="" />
-          </a>
+          </Link>
 
           <div
             onClick={logout}
@@ -124,12 +158,28 @@ export default function Navbar() {
 
             {NavBarData.map((item, index) => {
               return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
+                <li key={index} className={item.cName} onClick={isBroadcast}>
+                  {item.title == "마이페이지" && isbroadcast && (
+                    <Link to="/broadcasts">
+                      {item.icon}
 
-                    <span id="item_titl">{item.title}</span>
-                  </Link>
+                      <span id="item_titl">{item.title}</span>
+                    </Link>
+                  )}
+                  {item.title == "마이페이지" && !isbroadcast && (
+                    <Link to="/emptyBroadcast">
+                      {item.icon}
+
+                      <span id="item_titl">{item.title}</span>
+                    </Link>
+                  )}
+                  {item.title != "마이페이지" && (
+                    <Link to={item.path}>
+                      {item.icon}
+
+                      <span id="item_titl">{item.title}</span>
+                    </Link>
+                  )}
                 </li>
               );
             })}

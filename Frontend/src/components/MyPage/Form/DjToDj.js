@@ -15,6 +15,7 @@ import MailBox from "../../../UI/MailBox/MailBox";
 import ModifyProfile from "../ModifyProfile/ModifyProfile";
 
 import { profileActions } from "../../../store/profile";
+import { Subscriber } from "openvidu-browser";
 
 const DjToDj = () => {
   const navigate = useNavigate();
@@ -23,12 +24,13 @@ const DjToDj = () => {
 
   const [nickname, setNickname] = useState();
   const [desc, setDesc] = useState();
+  const [profileimg, setProfileimg] = useState();
+  const [subscriberCnt, setSubscriberCnt] = useState();
 
   const userId = window.localStorage.getItem("userId");
 
   //DJ정보렌더링(본인)
   useEffect(() => {
-    console.log(userId);
     const API_URL = `http://localhost:8080/users/${userId}`;
     axios({
       url: API_URL,
@@ -38,6 +40,8 @@ const DjToDj = () => {
         // console.log(res);
         setNickname(res.data.nickName);
         setDesc(res.data.desc);
+        setProfileimg(res.data.profileImg);
+        setSubscriberCnt(res.data.stationDTO.followCnt);
         dispatch(profileActions.setProfile(res.data));
       })
       .catch((err) => {
@@ -108,7 +112,7 @@ const DjToDj = () => {
   return (
     <motion.div variants={containerVariants} initial="hidden" animate="visible">
       <fieldset className="profile" style={{ marginTop: "10px" }}>
-        <img src={profileImg} alt="프로필이미지" className="circle" />
+        <img src={profileimg} alt="프로필이미지" className="circle" />
         <div className="trainerInfo">
           <div className="infoTop">
             <span className="nickname" style={{ marginRight: "20px", flex: 1 }}>
@@ -135,12 +139,12 @@ const DjToDj = () => {
               value={moveToCreate}
               margin="30px"
               marginLeft="10px"
-              name="방송시작하기"
+              name="방송시작"
             />
           </div>
           <div>
             <span className="lister">청취자</span>
-            <span className="listercnt">100k</span>
+            <span className="listercnt">{subscriberCnt}</span>
           </div>
           <div>
             <p className="content">{desc}</p>
@@ -154,7 +158,7 @@ const DjToDj = () => {
             <div>
               <span className="goLetter">사연함 보러가기</span>
               <span className="click">! ! Open ! !</span>
-              <Link onClick={toggleHandler} to="/emptyBoard">
+              <Link onClick={toggleHandler} to="/viewBoardList">
                 <MailBox />
               </Link>
             </div>

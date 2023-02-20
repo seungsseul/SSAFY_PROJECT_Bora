@@ -20,6 +20,7 @@ const UserToDj = () => {
 
   const [nickname, setNickname] = useState();
   const [desc, setDesc] = useState();
+  const [profileimg, setProfileimg] = useState();
 
   const userId = window.localStorage.getItem("userId");
   const djId = "3";
@@ -33,6 +34,7 @@ const UserToDj = () => {
       .then((res) => {
         setNickname(res.data.nickName);
         setDesc(res.data.desc);
+        setProfileimg(res.data.profileImg);
         dispatch(profileActions.setProfile(res.data));
       })
       .catch((err) => {
@@ -54,7 +56,7 @@ const UserToDj = () => {
 
   const subscribeHandler = () => {
     dispatch(boardActions.toggleSubscribe());
-    const API_URL = `http://localhost:8080/api/follow/redis`;
+    const API_URL = `http://localhost:8080/follow/redis`;
     let DATA = {};
     if (subscribe) {
       DATA = {

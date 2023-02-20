@@ -45,7 +45,7 @@ const App = () => {
         <Route path="/enterRoom" element={<VideoRoomComponent />} />
         <Route element={<Navbar />}>
           {/**redirect = Navigate */}
-          <Route path="/" element={<Navigate to="/makeBroadcast" />} />
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/main" element={<MainPageForm />} />
           {/**유저가 보는 DJ */}
           <Route element={<UserToDj />}>
@@ -63,8 +63,6 @@ const App = () => {
             <Route element={<OnAir />}>
               <Route path="/viewBoardList" element={<ViewBoardList />} />
               <Route path="/detailBoard" element={<DetailBoard />} />
-
-              <Route path="/broadcast" element={<Broadcast />} />
               <Route path="/modifyBroadcast" element={<ModifyBroadcast />} />
 
               <Route path="/broadcasts" element={<Broadcast />} />
